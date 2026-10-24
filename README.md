@@ -73,9 +73,16 @@ The server also listens on **UDP 8888** for what its log calls a world settings 
 
 Players don't need your IP or port to join. The most reliable way is the world's **join code**, which the server writes to `RSDragonwilds\Saved\Logs\RSDragonwilds.log` on every start (search the log for `JoinCode`). Players can also search for the exact world name (case sensitive) in the **Public** tab of the Worlds screen. Direct connect by IP may fail with "Network connection was interrupted" even when the join code works.
 
+## Move an existing world
+1. On the PC you play on, find the world in `%LOCALAPPDATA%\RSDragonwilds\Saved\SaveGames`. Each world is one `.sav` file named after it.
+1. Stop the server and back up its `RSDragonwilds\Saved\Savegames` folder.
+1. Copy your `.sav` into that folder.
+1. Set **Default Map** in WindowsGSM to the file name without `.sav`, since the server loads the save that matches it, then start the server.
+
+Characters aren't part of the world. They stay on each player's PC and join with them, so there's nothing else to copy. Map markers for some things you found locally, like Sanguine Urns, may not show on the server.
+
 ## Files to back up
 - World saves: `WindowsGSM\servers\%ID%\serverfiles\RSDragonwilds\Saved\Savegames`
-- Character data: `WindowsGSM\servers\%ID%\serverfiles\RSDragonwilds\Saved\SaveCharacters`
 - Server config: `WindowsGSM\servers\%ID%\serverfiles\RSDragonwilds\Saved\Config`
 - WindowsGSM config: `WindowsGSM\servers\%ID%\configs`
 
