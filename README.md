@@ -52,7 +52,7 @@ Only edit the file while the server is stopped, or the server overwrites your ch
 ## WindowsGSM settings
 - **Port**: UDP game port, 7777 by default. A second server uses 7778.
 - **Max Players**: passed to the server on launch. Dragonwilds allows up to 6, and higher values are lowered to 6.
-- **Start Param**: extra launch arguments, `-log -unattended -NoCrashDialog` by default, so a crash exits cleanly and Auto Restart can bring the server back.
+- **Start Param**: extra launch arguments, `-log -NoCrashDialog` by default, so a crash exits cleanly and Auto Restart can bring the server back. Don't add `-unattended`: it makes the server quit on Stop without saving, so the plugin removes it.
 - **Embed Console**: supported. Stop sends Ctrl+C and waits up to 60 seconds for the world to save before the process is killed.
 
 ## Port forwarding
