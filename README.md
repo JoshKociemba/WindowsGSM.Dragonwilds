@@ -36,8 +36,8 @@ PlatformPolicy=Crossplay
 
 | Key | What it is |
 |---|---|
-| `OwnerId` | Your Player ID (not your Steam ID), shown at the bottom of the in-game Settings menu. Required. The owner can ban and unban anyone. |
-| `AdminPassword` | Unlocks Pause Menu > Settings > Server Management in game. Admins can ban online players but can't unban. Optional. The server removes this line from the file every time it starts, so the plugin saves a copy in `serverfiles\AdminPassword.txt` and puts the line back before each start. To change it, edit the line in the ini again. To remove it, delete `AdminPassword.txt` as well. The server won't start while it's still `CHANGEME`. |
+| `OwnerId` | Your Player ID (not your Steam ID), shown at the bottom of the in-game Settings menu. Required. The owner can kick, ban, unban and grant admin from **Esc > Player List**, using the **⋮** next to each player. |
+| `AdminPassword` | Lets other players become admins. Admin controls are under **Esc > Player List** (older guides call it Server Management). Admins can kick and ban online players but can't unban, and the owner can also make someone an admin with **Grant Admin** instead. Optional. The server removes this line from the file every time it starts, so the plugin saves a copy in `serverfiles\AdminPassword.txt` and puts the line back before each start. To change it, edit the line in the ini again. To remove it, delete `AdminPassword.txt` as well. The server won't start while it's still `CHANGEME`. |
 | `WorldPassword` | Password to join, letters and numbers only. Leave empty for a public world. Overrides any password saved in the world. |
 | `PlatformPolicy` | Who can join: `Crossplay` (default), `PC`, `PlayStation`, `Xbox` or `Nintendo`. |
 | `ServerName` | Copied from the WindowsGSM **Server Name** on every start. Keep it to 32 characters; the public list only shows the first 16. |
