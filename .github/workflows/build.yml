@@ -1,0 +1,52 @@
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+env:
+  WINDOWSGSM_VERSION: v1.23.1
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Mono
+        run: sudo apt-get update -q && sudo apt-get install -y -q mono-devel
+
+      - name: Download WindowsGSM
+        run: curl -sSfL -o WindowsGSM.exe "https://github.com/WindowsGSM/WindowsGSM/releases/download/${WINDOWSGSM_VERSION}/WindowsGSM.exe"
+
+      # WindowsGSM compiles plugins at runtime, so this only checks the plugin compiles against its API
+      - name: Compile plugin
+        run: mcs -target:library -sdk:4.7.2 -warnaserror -r:WindowsGSM.exe -r:System.dll -r:System.Core.dll -r:System.Data.dll -out:Dragonwilds.dll Dragonwilds.cs/Dragonwilds.cs
+
+      # WindowsGSM's Import button takes the plugin folder name from the zip name
+      # (the part between "WindowsGSM." and "-"), so keep this naming scheme
+      - name: Package plugin
+        env:
+          VERSION: ${{ github.event.release.tag_name || 'dev' }}
+        run: |
+          echo "ZIP=WindowsGSM.Dragonwilds-${VERSION}.zip" >> "$GITHUB_ENV"
+          zip -r "WindowsGSM.Dragonwilds-${VERSION}.zip" Dragonwilds.cs
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WindowsGSM.Dragonwilds
+          path: ${{ env.ZIP }}
+
+      # Publishing a release on GitHub attaches the plugin zip to it
+      - name: Attach zip to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" "$ZIP" --clobber
